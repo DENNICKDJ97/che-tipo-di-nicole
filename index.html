@@ -96,6 +96,7 @@ textarea:focus{border-color:var(--accent)}
 .result .badge{font-size:54px;margin-bottom:6px}
 .result .pre{color:var(--muted);font-size:14px;font-weight:500}
 .result h2{font-size:32px;line-height:1.1;margin:6px 0 14px;background:linear-gradient(135deg,var(--accent),#7b2d6b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.result .kind{font-family:Fraunces,Georgia,serif;font-weight:700;font-size:22px;color:var(--ink);margin:-6px 0 12px}
 .result p.desc{font-size:16px;line-height:1.55;color:#4a3a50;margin-bottom:18px}
 .traits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px}
 .trait{background:var(--chip);border-radius:14px;padding:12px 10px}
@@ -213,7 +214,7 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
 
   var busy = false;
   // Indizi brevi che compaiono andando avanti, prima di alcune domande.
-  var TEASE = {3:"Mmh… iniziamo a capire chi sei 👀", 5:"Ci siamo quasi ✨"};
+  var TEASE = {3:"Mmh… iniziamo a capire chi sei 👀"};
   // Cambio schermata in verticale: avanti = sale verso l'alto, indietro = scende.
   function go(newStep, dir){
     if(busy) return;
@@ -451,14 +452,17 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     count.textContent = "✓";
     back.disabled = false;
     var p = profile();
-    var name = "Nicole " + p.map(function(k){ return PROFILES[k].n; }).join(" & ");
+    var TITLE = "Nicole The Princess Pizzolina";
+    var kind = p.map(function(k){ return PROFILES[k].n; }).join(" & ");
+    var name = TITLE + " " + kind;
     var card = el("section","card result");
     var pre = el("div","pre","Gratta per scoprire il tuo profilo");
     card.appendChild(pre);
 
     var rv = el("div","reveal");
     rv.appendChild(el("div","badge",p.map(function(k){ return PROFILES[k].e; }).join("")));
-    rv.appendChild(el("h2",null,name));
+    rv.appendChild(el("h2",null,TITLE + " 👑"));
+    rv.appendChild(el("div","kind",kind));
     card.appendChild(rv);
     var alt = el("button","reveal-alt","oppure tocca qui");
     card.appendChild(alt);
