@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>Che tipo di Nicole sei?</title>
-<meta name="description" content="Una decina di domande, 3 minuti. Rispondi d'istinto e scopri il tuo profilo.">
+<meta name="description" content="Una quindicina di domande, 4 minuti. Rispondi d'istinto e scopri il tuo profilo.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dennickdj97.github.io/che-tipo-di-nicole/">
 <meta property="og:title" content="Che tipo di Nicole sei? ✨">
-<meta property="og:description" content="Una decina di domande, 3 minuti. Rispondi d'istinto e scopri il tuo profilo.">
+<meta property="og:description" content="Una quindicina di domande, 4 minuti. Rispondi d'istinto e scopri il tuo profilo.">
 <meta property="og:image" content="https://dennickdj97.github.io/che-tipo-di-nicole/anteprima.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -108,6 +108,14 @@ textarea:focus{border-color:var(--accent)}
 .trait{background:var(--chip);border-radius:14px;padding:12px 10px}
 .trait b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:4px}
 .trait span{font-size:15px;font-weight:500}
+.rcards{display:grid;gap:8px;margin:2px 0 22px;text-align:left}
+.rcard{display:flex;align-items:center;gap:12px;background:var(--chip);border-radius:14px;padding:11px 12px;animation:afterIn .5s ease both}
+.rcard .ri{font-size:22px;width:30px;text-align:center;flex:none}
+.rcard b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:2px}
+.rcard span{font-size:15px;font-weight:500;line-height:1.3}
+input.field{width:100%;border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;font:16px "DM Sans",sans-serif;color:var(--ink);outline:none;background:#fff;margin-bottom:10px}
+input.field:focus{border-color:var(--accent)}
+.hint2{color:var(--muted);font-size:13px;margin:2px 0 4px}
 /* Gratta e scopri */
 .reveal{position:relative;border-radius:18px;padding:12px 0 4px;margin:6px 0 4px}
 canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18px;touch-action:none;cursor:pointer;transition:opacity .5s ease}
@@ -153,97 +161,121 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
   // "show" = domanda che compare solo con certe risposte (A = risposte date finora).
   function has(A,id,i){ var v = A[id]; return Array.isArray(v) ? v.indexOf(i) >= 0 : v === i; }
   function first(A,id,i){ var v = A[id]; return Array.isArray(v) ? v[0] === i : v === i; }
+  // g = gruppo nel riepilogo (beauty, tempo, stile). k = parola breve per le schede del risultato.
   var Q = [
-    {id:12, kind:"choice", kicker:"Per scaldarci", title:"Il tuo superpotere da make-up artist?", label:"Superpotere",
+    {id:12, g:"beauty", kind:"choice", kicker:"💄 Beauty · per scaldarci", title:"Il tuo superpotere da make-up artist?", label:"Superpotere",
      opts:[
       {e:"✍️", t:"Eyeliner perfetto al primo colpo", c:""},
       {e:"✨", t:"Una base che sembra pelle vera", c:""},
       {e:"💋", t:"Labbra da copertina", c:""},
       {e:"🪄", t:"Sopracciglia scolpite", c:""}]},
-    {id:1, kind:"choice", kicker:"Come stai", title:"In questo periodo ti senti più…", label:"Mi sento",
+    {id:1, g:"tempo", kind:"choice", kicker:"💭 Tu · come stai", title:"In questo periodo ti senti più…", label:"Mi sento",
      opts:[
       {e:"😮‍💨", t:"Stanca, con voglia di staccare", c:"zen"},
       {e:"⚡", t:"Carica, con voglia di novità", c:"explorer"},
       {e:"💼", t:"Con la testa sul lavoro", c:"glam"},
       {e:"🫶", t:"Con voglia di coccole", c:"cozy"}]},
-    {id:2, kind:"choice", kicker:"La tua settimana", title:"Il tuo momento preferito della settimana?", label:"Momento preferito",
+    {id:20, g:"beauty", kind:"choice", kicker:"💄 Beauty · in profumeria", title:"Entri in profumeria. Quale reparto ti chiama per primo?", label:"Reparto preferito",
+     opts:[
+      {e:"💄", t:"Il trucco", k:"trucco", c:"glam"},
+      {e:"🧴", t:"La skincare", k:"skincare", c:"zen"},
+      {e:"🌸", t:"I profumi", k:"profumi", c:"dreamer"},
+      {e:"💇‍♀️", t:"I capelli", k:"capelli", c:"cozy"},
+      {e:"🖌️", t:"Pennelli e accessori", k:"pennelli e accessori", c:"glam"}]},
+    {id:2, g:"tempo", kind:"choice", kicker:"🌿 Tempo libero", title:"Il tuo momento preferito della settimana?", label:"Momento preferito",
      opts:[
       {e:"🎬", t:"Un film al cinema", c:"dreamer"},
       {e:"🛁", t:"Il tempo solo per me", c:"cozy"},
       {e:"🚆", t:"Andare a scoprire qualcosa di nuovo", c:"explorer"},
       {e:"💄", t:"Creare un look", c:"glam"}]},
-    {id:3, kind:"choice", kicker:"Confessa", title:"Cosa non fai da troppo tempo?", label:"Da troppo non faccio",
+    {id:21, g:"beauty", kind:"choice", kicker:"💄 Beauty · prima prova", title:"Quando provi un make-up nuovo, cosa ti conquista?", label:"Nel make-up mi conquista",
+     opts:[
+      {e:"🤍", t:"La texture, come si sente sulla pelle", c:"cozy"},
+      {e:"🎨", t:"I colori che non ho mai provato", c:"explorer"},
+      {e:"🎁", t:"Un packaging bellissimo", c:"dreamer"},
+      {e:"⏱️", t:"La tenuta da professionista", c:"glam"}]},
+    {id:3, g:"tempo", kind:"choice", kicker:"🌿 Tempo libero · confessa", title:"Cosa non fai da troppo tempo?", label:"Da troppo non faccio",
      opts:[
       {e:"🧖‍♀️", t:"Una giornata di relax totale", c:"zen"},
       {e:"🚆", t:"Una gita fuori città", c:"explorer"},
       {e:"🍿", t:"Una serata al cinema", c:"dreamer"},
       {e:"🕯️", t:"Una serata di coccole tutta per me", c:"cozy"}]},
-    {id:4, kind:"two", kicker:"Giornata libera", title:"Una giornata libera tutta per te. La passi…", label:"Giornata libera",
+    {id:22, g:"beauty", kind:"choice", kicker:"💄 Beauty · allo specchio", title:"Il tuo trucco di tutti i giorni?", label:"Trucco di tutti i giorni",
+     opts:[
+      {e:"🌤️", t:"Pelle nuda e luminosa", k:"pelle luminosa", c:"zen"},
+      {e:"🌷", t:"Glam morbido", k:"glam morbido", c:"cozy"},
+      {e:"🖤", t:"Eyeliner deciso", k:"eyeliner deciso", c:"glam"},
+      {e:"💋", t:"Labbra protagoniste", k:"labbra protagoniste", c:"dreamer"}]},
+    {id:4, g:"tempo", kind:"two", kicker:"🌿 Tempo libero", title:"Una giornata libera tutta per te. La passi…", label:"Giornata libera",
      hint:"Tocca la prima scelta, poi la seconda",
      opts:[
-      {e:"♨️", t:"Tra sauna e piscine calde", c:"zen"},
-      {e:"🏙️", t:"In una città mai vista", c:"explorer"},
-      {e:"💄", t:"A provare trucchi nuovi", c:"glam"},
-      {e:"🍿", t:"Al cinema", c:"dreamer"},
-      {e:"⛷️", t:"Sulla neve, tra piste e baita", c:"explorer"}]},
-    {id:5, kind:"choice", kicker:"Sii sincera", title:"Il tuo sfizio che rimandi sempre?", label:"Sfizio rimandato",
-     opts:[
-      {e:"💅", t:"Un trattamento tutto per me", s:"viso, mani, capelli…", c:"zen"},
-      {e:"👜", t:"Un accessorio bello che non mi compro mai", c:"glam"},
-      {e:"✈️", t:"Un'esperienza da \"un giorno lo farò\"", c:"explorer"},
-      {e:"💄", t:"Un prodotto top che mi sembra esagerato", c:"glam"},
-      {e:"✍️", t:"Altro", other:true, ph:"Scrivilo qui…", c:""}]},
-    {id:51, kind:"choice", kicker:"Dimmi di più", title:"Il trattamento dei sogni?", label:"Trattamento dei sogni",
-     show:function(A){ return A[5] === 0; },
-     opts:[
-      {e:"🧖‍♀️", t:"Un trattamento viso da vera diva", c:"zen"},
-      {e:"💅", t:"Mani e piedi perfetti", c:"glam"},
-      {e:"💇‍♀️", t:"Una giornata dal parrucchiere top", c:"glam"},
-      {e:"💆‍♀️", t:"Un massaggio solo per me", c:"zen"}]},
-    {id:52, kind:"choice", kicker:"Dimmi di più", title:"L'accessorio che ti fa battere il cuore?", label:"Accessorio del cuore",
-     show:function(A){ return A[5] === 1; },
-     opts:[
-      {e:"👜", t:"Una borsa", c:"glam"},
-      {e:"🧣", t:"Una sciarpa o un foulard", c:"cozy"},
-      {e:"🕶️", t:"Occhiali da sole", c:"explorer"},
-      {e:"🧢", t:"Un cappello o un berretto", c:"cozy"},
-      {e:"✍️", t:"Altro", other:true, ph:"Scrivilo qui…", c:""}]},
-    {id:6, kind:"choice", kicker:"La tua nota", title:"Che profumo ti somiglia di più?", label:"Profumo",
+      {e:"♨️", t:"Tra sauna e piscine calde", k:"relax", c:"zen"},
+      {e:"🏙️", t:"In una città mai vista", k:"città nuove", c:"explorer"},
+      {e:"💄", t:"A provare trucchi nuovi", k:"make-up", c:"glam"},
+      {e:"🍿", t:"Al cinema", k:"cinema", c:"dreamer"},
+      {e:"⛷️", t:"Sulla neve, tra piste e baita", k:"neve", c:"explorer"}]},
+    {id:6, g:"beauty", kind:"choice", kicker:"💄 Beauty · la tua nota", title:"Che profumo ti somiglia di più?", label:"Profumo",
      opts:[
       {e:"🌸", t:"Fiori delicati", c:""},
       {e:"🍊", t:"Agrumi solari", c:""},
       {e:"🪵", t:"Legni caldi e spezie", c:""},
       {e:"🌊", t:"Fresco e pulito", c:""}]},
-    {id:7, kind:"choice", kicker:"Piccoli drammi", title:"La piccola cosa che ti fa impazzire ogni giorno?", label:"Fastidio quotidiano",
+    {id:5, g:"stile", kind:"choice", kicker:"✨ Tu · piccole gioie", title:"Il piccolo lusso che ti migliora subito la giornata?", label:"Piccolo lusso",
      opts:[
-      {e:"🖌️", t:"I pennelli che si rovinano", c:"glam"},
-      {e:"👛", t:"Nella borsa non trovo mai niente", c:""},
-      {e:"🥶", t:"Il freddo a mani e piedi", c:"cozy"},
-      {e:"🔋", t:"Il telefono che si scarica", c:""},
+      {e:"🧴", t:"Una crema che profuma di buono", c:"cozy"},
+      {e:"💄", t:"Un rossetto nuovo", c:"glam"},
+      {e:"🥐", t:"Colazione fuori con un caffè speciale", c:"explorer"},
+      {e:"💅", t:"Un trattamento tutto per me", s:"viso, mani, capelli…", c:"zen"},
       {e:"✍️", t:"Altro", other:true, ph:"Scrivilo qui…", c:""}]},
-    {id:71, kind:"choice", kicker:"Tra noi MUA", title:"I pennelli che ti finiscono prima?", label:"Pennelli più usati",
+    {id:51, g:"stile", kind:"choice", kicker:"✨ Dimmi di più", title:"Il trattamento dei sogni?", label:"Trattamento dei sogni",
+     show:function(A){ return A[5] === 3; },
+     opts:[
+      {e:"🧖‍♀️", t:"Un trattamento viso da vera diva", c:"zen"},
+      {e:"💅", t:"Mani e piedi perfetti", c:"glam"},
+      {e:"💇‍♀️", t:"Una giornata dal parrucchiere top", c:"glam"},
+      {e:"💆‍♀️", t:"Un massaggio solo per me", c:"zen"}]},
+    {id:23, g:"stile", kind:"choice", kicker:"✨ Stile · occhio al dettaglio", title:"Cosa rende speciale un oggetto per te?", label:"Dettaglio che conta",
+     opts:[
+      {e:"◻️", t:"Un design pulito e minimal", k:"minimal", c:"zen"},
+      {e:"💛", t:"Materiali preziosi: oro, velluto", k:"materiali preziosi", c:"glam"},
+      {e:"🎀", t:"Un tocco romantico: fiori, fiocchi", k:"tocco romantico", c:"dreamer"},
+      {e:"🌈", t:"Qualcosa di originale e colorato", k:"originale e colorato", c:"explorer"}]},
+    {id:7, g:"stile", kind:"choice", kicker:"✨ Tu · piccoli drammi", title:"La piccola cosa che ti fa impazzire ogni giorno?", label:"Fastidio quotidiano",
+     opts:[
+      {e:"🖌️", t:"I pennelli che si rovinano", m:"I pennelli rovinati ti tolgono il sonno", c:"glam"},
+      {e:"👛", t:"Nella borsa non trovo mai niente", m:"La tua borsa è un buco nero (e lo sai)", c:""},
+      {e:"🥶", t:"Il freddo a mani e piedi", m:"Sciarpa e calzini caldi, sempre", c:"cozy"},
+      {e:"🔋", t:"Il telefono che si scarica", m:"Il 10% di batteria è un'emergenza", c:""},
+      {e:"✍️", t:"Altro", other:true, ph:"Scrivilo qui…", m:"Hai una mania tutta tua (e la custodisci)", c:""}]},
+    {id:71, g:"beauty", kind:"choice", kicker:"💄 Tra noi MUA", title:"I pennelli che ti finiscono prima?", label:"Pennelli più usati",
      show:function(A){ return A[7] === 0; },
      opts:[
       {e:"🫧", t:"Fondotinta e correttore", c:"glam"},
       {e:"👁️", t:"Occhi e sfumature", c:"glam"},
       {e:"🌸", t:"Cipria, blush e bronzer", c:"glam"},
       {e:"💋", t:"Labbra e dettagli", c:"glam"}]},
-    {id:8, kind:"choice", kicker:"Il tuo inverno", title:"Domenica di gennaio, fuori fa freddo. Il piano perfetto?", label:"Domenica di gennaio",
+    {id:24, g:"tempo", kind:"choice", kicker:"🌿 Tempo libero · in viaggio", title:"Arrivi in una città nuova. Cosa cerchi per prima cosa?", label:"In una città nuova cerco",
+     opts:[
+      {e:"☕", t:"Il caffè più bello", k:"caffè belli", c:"cozy"},
+      {e:"🛍️", t:"Boutique e negozietti", k:"boutique", c:"glam"},
+      {e:"🖼️", t:"Musei e scorci", k:"musei e scorci", c:"dreamer"},
+      {e:"🌅", t:"Un posto con vista per rilassarmi", k:"posti con vista", c:"zen"}]},
+    {id:8, g:"tempo", kind:"choice", kicker:"🌿 Il tuo inverno", title:"Domenica di gennaio, fuori fa freddo. Il piano perfetto?", label:"Domenica di gennaio",
      opts:[
       {e:"♨️", t:"Al caldo tra vapore e piscine", c:"zen"},
       {e:"⛷️", t:"Sulle piste, tra neve e sole", c:"explorer"},
       {e:"🚆", t:"In treno verso una città nuova", c:"explorer"},
       {e:"🍿", t:"Al buio in sala, con i popcorn", c:"dreamer"},
       {e:"🕯️", t:"A casa tra candele, bagno caldo e creme", c:"cozy"}]},
-    {id:82, kind:"choice", kicker:"Dimmi di più", title:"Il tuo relax perfetto?", label:"Relax perfetto",
+    {id:82, g:"tempo", kind:"choice", kicker:"🌿 Dimmi di più", title:"Il tuo relax perfetto?", label:"Relax perfetto",
      show:function(A){ return A[3] === 0 || first(A,4,0) || A[8] === 0; },
      opts:[
       {e:"🌊", t:"Piscine calde all'aperto, anche col freddo", c:"zen"},
       {e:"🔥", t:"Sauna e bagno turco", c:"zen"},
       {e:"🏔️", t:"Con vista sulle montagne", c:"explorer"},
       {e:"🌃", t:"Di sera, con le luci della città", c:"dreamer"}]},
-    {id:10, kind:"text", kicker:"Ultima!", title:"Il prodotto o i prodotti beauty di cui non potresti mai fare a meno?", label:"Must-have beauty",
-     ph:"es. il tuo mascara del cuore, una crema, un pennello…"}
+    {id:10, g:"beauty", kind:"text2", kicker:"💄 Ultima! Tra noi MUA", title:"Il brand che non ti delude mai? E il prodotto che ricompreresti a occhi chiusi?", label:"Brand e prodotto del cuore",
+     f1:"Il brand…", f2:"Il prodotto…"}
   ];
 
   // Le domande visibili adesso, in base alle risposte date.
@@ -308,7 +340,7 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     if(step >= L.length) return false;
     var q = L[step];
     if(q.kind === "two") return Array.isArray(answers[q.id]) && answers[q.id].length === 2;
-    return q.kind === "text" || answers[q.id] != null;
+    return q.kind === "text" || q.kind === "text2" || answers[q.id] != null;
   }
 
   // Swipe verticale: su = avanti (se ha risposto), giù = indietro.
@@ -324,6 +356,10 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     if(dy < -60 && answered() && step < L.length){
       var oi = stage.querySelector(".other-row input");
       if(oi && step >= 0) answers[L[step].id + "_t"] = oi.value.trim();
+      if(step >= 0 && L[step].kind === "text2"){
+        var fs = stage.querySelectorAll("input.field");
+        answers[L[step].id] = {a:(fs[0]||{value:""}).value.trim(), b:(fs[1]||{value:""}).value.trim()};
+      }
       if(step >= 0 && L[step].kind === "text"){
         answers[L[step].id] = (stage.querySelector("textarea") || {value:""}).value.trim();
       }
@@ -352,6 +388,7 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     if(q.kind === "choice") renderChoice(card,q);
     else if(q.kind === "two") renderTwo(card,q);
     else if(q.kind === "stars") renderStars(card,q);
+    else if(q.kind === "text2") renderText2(card,q);
     else renderText(card,q);
     stage.appendChild(card);
     stage.appendChild(el("div","swipe-hint", step === 0 ? "Tocca una risposta · scorri in giù per tornare indietro" : ""));
@@ -362,7 +399,7 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     top.classList.remove("on");
     var d = el("section","intro");
     d.appendChild(el("h1",null,"Che tipo di Nicole sei? ✨"));
-    d.appendChild(el("p",null,"Una decina di domande, 3 minuti. Rispondi d'istinto, senza pensarci troppo: alla fine scopri il tuo profilo."));
+    d.appendChild(el("p",null,"Una quindicina di domande, 4 minuti. Rispondi d'istinto, senza pensarci troppo: alla fine scopri il tuo profilo."));
     var b = el("button","btn primary","Iniziamo 💫");
     b.onclick = function(){ go(0, "up"); };
     d.appendChild(b);
@@ -477,6 +514,23 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     card.appendChild(row);
   }
 
+  // Due campi brevi e facoltativi (brand + prodotto).
+  function renderText2(card,q){
+    var v = answers[q.id] || {};
+    var a = el("input"); a.type = "text"; a.maxLength = 80; a.placeholder = q.f1; a.value = v.a || ""; a.className = "field";
+    var b = el("input"); b.type = "text"; b.maxLength = 120; b.placeholder = q.f2; b.value = v.b || ""; b.className = "field";
+    card.appendChild(a); card.appendChild(b);
+    card.appendChild(el("p","hint2","Facoltativo: se non ti viene in mente, salta pure"));
+    var row = el("div","row");
+    var ok = el("button","btn primary","Scopri il tuo profilo ✨");
+    ok.style.background = "linear-gradient(135deg,var(--accent),#7b2d6b)"; ok.style.color = "#fff";
+    ok.onclick = function(){ answers[q.id] = {a:a.value.trim(), b:b.value.trim()}; next(); };
+    var skip = el("button","btn ghost","Salta");
+    skip.onclick = function(){ answers[q.id] = {a:"", b:""}; next(); };
+    row.appendChild(ok); row.appendChild(skip);
+    card.appendChild(row);
+  }
+
   function next(){ go(step + 1, "up"); }
   back.onclick = function(){ if(step >= 0) go(step - 1, "down"); };
 
@@ -525,12 +579,21 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     }
     if(q.kind === "two") return Array.isArray(v) && v.length ? v.map(function(i,k){ return (k+1) + ") " + q.opts[i].t; }).join("  ") : "—";
     if(q.kind === "stars") return v ? v + "/5" : "—";
+    if(q.kind === "text2"){ v = v || {}; return "brand: " + (v.a || "—") + " · prodotto: " + (v.b || "—"); }
     return v ? v : "—";
   }
 
+  // Riepilogo: prima il profilo (un gioco), poi le risposte vere, divise per tema.
+  var GROUPS = [["beauty","💄 Beauty"],["tempo","🌿 Tempo libero"],["stile","✨ Stile e piccole gioie"]];
   function message(name){
-    var lines = ["✨ Che tipo di Nicole sei? → " + name, "Mix: " + mixText(), ""];
-    V().forEach(function(q,i){ lines.push((i + 1) + ". " + q.label + ": " + answerText(q)); });
+    var lines = ["✨ Che tipo di Nicole sei?", "", "🎭 Il mio profilo (per gioco): " + name, mixText(), "", "📝 Le mie risposte"];
+    var L = V(), n = 0;
+    GROUPS.forEach(function(g){
+      var qs = L.filter(function(q){ return q.g === g[0]; });
+      if(!qs.length) return;
+      lines.push("", g[1]);
+      qs.forEach(function(q){ n++; lines.push(n + ". " + q.label + ": " + answerText(q)); });
+    });
     return lines.join("\n");
   }
 
@@ -566,16 +629,27 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
       fills.push([f,o.pct]); bars.appendChild(row);
     });
     after.appendChild(bars);
-    var traits = el("div","traits");
-    [["La tua nota",6],["La tua domenica",8]].forEach(function(t){
-      var q = Q.filter(function(x){return x.id === t[1];})[0];
-      var box = el("div","trait");
-      box.appendChild(el("b",null,t[0]));
-      var v = answers[q.id];
-      box.appendChild(el("span",null, v == null ? "—" : q.opts[v].e + " " + q.opts[v].t));
-      traits.appendChild(box);
+    // Schede del risultato, tutte ricavate dalle risposte.
+    function pick(id){ var q = Q.filter(function(x){ return x.id === id; })[0]; var v = answers[id]; return (q && v != null && !Array.isArray(v)) ? q.opts[v] : null; }
+    var cards = [];
+    var sp = pick(12); if(sp) cards.push(["⚡","Il tuo superpotere", sp.t]);
+    var dom = pick(8); if(dom) cards.push(["📍","Ti riconosci in", dom.t]);
+    var ma = pick(7); if(ma) cards.push(["🙈","La tua piccola mania", ma.m]);
+    var lk = pick(22), dt = pick(23);
+    if(lk || dt) cards.push(["🪞","Il tuo stile", [lk && lk.k, dt && dt.k].filter(Boolean).join(", ").replace(/^./, function(c){ return c.toUpperCase(); })]);
+    var rp = pick(20), gl = answers[4], ci = pick(24);
+    var ints = [rp && rp.k, Array.isArray(gl) && gl.length ? Q.filter(function(x){return x.id === 4;})[0].opts[gl[0]].k : null, ci && ci.k].filter(Boolean);
+    ints = ints.filter(function(x,i){ return ints.indexOf(x) === i; });
+    if(ints.length) cards.push(["💫","I tuoi interessi", ints.join(" · ").replace(/^./, function(c){ return c.toUpperCase(); })]);
+    var nt = pick(6); if(nt) cards.push([nt.e,"La tua nota", nt.t]);
+    var cbox = el("div","rcards");
+    cards.forEach(function(c,i){
+      var r = el("div","rcard"); r.style.animationDelay = (0.15 + i*0.09) + "s";
+      r.appendChild(el("span","ri",c[0]));
+      var tx = el("div"); tx.appendChild(el("b",null,c[1])); tx.appendChild(el("span",null,c[2]));
+      r.appendChild(tx); cbox.appendChild(r);
     });
-    after.appendChild(traits);
+    after.appendChild(cbox);
 
     var msg = message(name);
     var send = el("button","btn accent","Manda il risultato a Nicholas 💬");
