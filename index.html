@@ -6,8 +6,14 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Che tipo di Nicole sei?</title>
 <meta name="description" content="9 domande, 2 minuti. Rispondi d'istinto e scopri il tuo profilo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dennickdj97.github.io/che-tipo-di-nicole/">
 <meta property="og:title" content="Che tipo di Nicole sei? ✨">
 <meta property="og:description" content="9 domande, 2 minuti. Rispondi d'istinto e scopri il tuo profilo.">
+<meta property="og:image" content="https://dennickdj97.github.io/che-tipo-di-nicole/anteprima.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#2a1530">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✨%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -396,6 +402,41 @@ textarea:focus{border-color:var(--accent)}
     card.appendChild(copybox);
     stage.appendChild(card);
     window.scrollTo(0,0);
+    setTimeout(confetti, 350);
+  }
+
+  // Coriandoli al risultato: canvas leggero, una sola raffica.
+  function confetti(){
+    if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var cv = document.createElement("canvas");
+    cv.style.cssText = "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5";
+    document.body.appendChild(cv);
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = cv.width = innerWidth * dpr, H = cv.height = innerHeight * dpr;
+    var ctx = cv.getContext("2d");
+    var colors = ["#c2457a","#e9a23b","#ffffff","#f6c1d4","#7b2d6b","#ffd27a"];
+    var parts = [];
+    for(var i=0;i<140;i++){
+      parts.push({
+        x: W/2 + (Math.random()-.5)*W*0.3, y: H*0.35,
+        vx: (Math.random()-.5)*14*dpr, vy: (-Math.random()*13-6)*dpr,
+        w: (6+Math.random()*6)*dpr, h: (3+Math.random()*4)*dpr,
+        r: Math.random()*6.28, vr: (Math.random()-.5)*.35,
+        c: colors[i % colors.length]
+      });
+    }
+    var t0 = performance.now();
+    (function frame(now){
+      var t = now - t0;
+      ctx.clearRect(0,0,W,H);
+      parts.forEach(function(p){
+        p.vy += .38*dpr; p.vx *= .992; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
+        ctx.globalAlpha = Math.max(0, 1 - t/3200);
+        ctx.fillStyle = p.c; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore();
+      });
+      if(t < 3200) requestAnimationFrame(frame); else cv.remove();
+    })(t0);
   }
 
   // stelline di sfondo
