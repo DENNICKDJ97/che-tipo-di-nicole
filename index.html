@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>Che tipo di Nicole sei?</title>
-<meta name="description" content="8 domande, 2 minuti. Rispondi d'istinto e scopri il tuo profilo.">
+<meta name="description" content="7 domande, 2 minuti. Rispondi d'istinto e scopri il tuo profilo.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dennickdj97.github.io/che-tipo-di-nicole/">
 <meta property="og:title" content="Che tipo di Nicole sei? ✨">
-<meta property="og:description" content="8 domande, 2 minuti. Rispondi d'istinto e scopri il tuo profilo.">
+<meta property="og:description" content="7 domande, 2 minuti. Rispondi d'istinto e scopri il tuo profilo.">
 <meta property="og:image" content="https://dennickdj97.github.io/che-tipo-di-nicole/anteprima.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -143,34 +143,27 @@ textarea:focus{border-color:var(--accent)}
       {e:"🧖‍♀️", t:"Una giornata di relax totale", c:"zen"},
       {e:"🚆", t:"Una gita fuori città", c:"explorer"},
       {e:"🍿", t:"Una serata al cinema", c:"dreamer"},
-      {e:"🛍️", t:"Un pomeriggio di shopping solo per me", c:"glam"}]},
-    {id:4, kind:"choice", kicker:"Il tuo stile", title:"Il tuo stile di accessori?", label:"Accessori",
-     opts:[
-      {e:"🌟", t:"Oro, minimal", c:""},
-      {e:"🤍", t:"Argento, minimal", c:""},
-      {e:"💛", t:"Oro, vistoso", c:"glam"},
-      {e:"🪩", t:"Argento, vistoso", c:"glam"},
-      {e:"🙅‍♀️", t:"Quasi mai, non fanno per me", c:""}]},
-    {id:5, kind:"two", kicker:"Giornata libera", title:"Una giornata libera tutta per te. La passi…", label:"Giornata libera",
+      {e:"🕯️", t:"Una serata di coccole tutta per me", c:"cozy"}]},
+    {id:4, kind:"two", kicker:"Giornata libera", title:"Una giornata libera tutta per te. La passi…", label:"Giornata libera",
      hint:"Tocca la prima scelta, poi la seconda",
      opts:[
       {e:"♨️", t:"Tra sauna e piscine calde", c:"zen"},
       {e:"🏙️", t:"In una città mai vista", c:"explorer"},
       {e:"💄", t:"A provare trucchi nuovi", c:"glam"},
       {e:"🍿", t:"Al cinema", c:"dreamer"}]},
-    {id:6, kind:"choice", kicker:"La tua nota", title:"Che profumo ti somiglia di più?", label:"Profumo",
+    {id:5, kind:"choice", kicker:"La tua nota", title:"Che profumo ti somiglia di più?", label:"Profumo",
      opts:[
       {e:"🌸", t:"Fiori delicati", c:""},
       {e:"🍊", t:"Agrumi solari", c:""},
       {e:"🪵", t:"Legni caldi e spezie", c:""},
       {e:"🌊", t:"Fresco e pulito", c:""}]},
-    {id:7, kind:"choice", kicker:"Il tuo inverno", title:"Se il tuo inverno avesse un colore, quale sarebbe?", label:"Colore dell'inverno",
+    {id:6, kind:"choice", kicker:"Il tuo inverno", title:"Se il tuo inverno avesse un colore, quale sarebbe?", label:"Colore dell'inverno",
      opts:[
       {e:"⚪", t:"Bianco neve", s:"come un paesaggio che scorre dal finestrino", c:"explorer"},
       {e:"🔴", t:"Rosso velluto", s:"come un sipario che si apre", c:"dreamer"},
       {e:"🕯️", t:"Ambra", s:"come la luce di una candela la sera", c:"cozy"},
       {e:"🩵", t:"Azzurro vapore", s:"come il respiro caldo nell'aria fredda", c:"zen"}]},
-    {id:8, kind:"text", kicker:"Ultima!", title:"Il prodotto o i prodotti beauty di cui non potresti mai fare a meno?", label:"Must-have beauty",
+    {id:7, kind:"text", kicker:"Ultima!", title:"Il prodotto o i prodotti beauty di cui non potresti mai fare a meno?", label:"Must-have beauty",
      ph:"es. il tuo mascara del cuore, una crema, un pennello…"}
   ];
 
@@ -265,7 +258,7 @@ textarea:focus{border-color:var(--accent)}
     top.classList.remove("on");
     var d = el("section","intro");
     d.appendChild(el("h1",null,"Che tipo di Nicole sei? ✨"));
-    d.appendChild(el("p",null,"8 domande, 2 minuti. Rispondi d'istinto, senza pensarci troppo: alla fine scopri il tuo profilo."));
+    d.appendChild(el("p",null,"7 domande, 2 minuti. Rispondi d'istinto, senza pensarci troppo: alla fine scopri il tuo profilo."));
     var b = el("button","btn primary","Iniziamo 💫");
     b.onclick = function(){ go(0, "up"); };
     d.appendChild(b);
@@ -408,7 +401,7 @@ textarea:focus{border-color:var(--accent)}
     card.appendChild(el("h2",null,name));
     card.appendChild(el("p","desc",PROFILES[p[0]].d));
     var traits = el("div","traits");
-    [["La tua nota",6],["Il tuo colore",7]].forEach(function(t){
+    [["La tua nota",5],["Il tuo colore",6]].forEach(function(t){
       var q = Q.filter(function(x){return x.id === t[1];})[0];
       var box = el("div","trait");
       box.appendChild(el("b",null,t[0]));
