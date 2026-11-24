@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Che tipo di Nicole sei?</title>
+<meta name="description" content="9 domande, 2 minuti. Rispondi d'istinto e scopri il tuo profilo.">
+<meta property="og:title" content="Che tipo di Nicole sei? ✨">
+<meta property="og:description" content="9 domande, 2 minuti. Rispondi d'istinto e scopri il tuo profilo.">
+<meta name="theme-color" content="#2a1530">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✨%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#2a1530; --bg2:#5b2448; --bg3:#c25b7a;
+  --card:rgba(255,255,255,.96); --ink:#2a1530; --muted:#7a6680;
+  --accent:#c2457a; --accent2:#e9a23b; --line:#eadfe8; --chip:#fbf4f8;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:"DM Sans",system-ui,-apple-system,sans-serif;color:var(--ink);
+  background:var(--bg1);min-height:100dvh;overflow-x:hidden;
+}
+/* Foto di sfondo: a pieno schermo, velo scuro per leggere bene.
+   Sull'intro la foto si vede di più, durante le domande il velo è più scuro. */
+.bg{position:fixed;inset:0;z-index:0;background:url("sfondo.jpg") center 40%/cover no-repeat;transition:filter .6s ease,transform .8s ease}
+.veil{position:fixed;inset:0;z-index:0;transition:opacity .6s ease;
+  background:linear-gradient(180deg,rgba(42,21,48,0) 0%,rgba(42,21,48,.1) 55%,rgba(42,21,48,.85) 80%,rgba(42,21,48,.96) 100%)}
+.veil2{position:fixed;inset:0;z-index:0;opacity:0;transition:opacity .6s ease;
+  background:linear-gradient(180deg,rgba(42,21,48,.55),rgba(91,36,72,.72))}
+body.quiz .bg{filter:blur(3px) saturate(1.05);transform:scale(1.04)}
+body.quiz .veil2{opacity:1}
+.screen.is-intro{justify-content:flex-end;padding-bottom:8px}
+.sparkles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.sparkles i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.0;animation:tw 4s infinite ease-in-out}
+@keyframes tw{0%,100%{opacity:0;transform:scale(.6)}50%{opacity:.75;transform:scale(1.2)}}
+.wrap{position:relative;z-index:1;max-width:460px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:max(16px,env(safe-area-inset-top)) 16px max(20px,env(safe-area-inset-bottom))}
+.top{display:flex;align-items:center;gap:12px;height:40px;margin-bottom:12px;visibility:hidden}
+.top.on{visibility:visible}
+.back{border:0;background:rgba(255,255,255,.14);color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;flex:none}
+.back:disabled{opacity:.3}
+.bar{flex:1;height:6px;border-radius:6px;background:rgba(255,255,255,.18);overflow:hidden}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent2),#fff);border-radius:6px;transition:width .35s ease}
+.count{color:rgba(255,255,255,.8);font-size:13px;font-weight:500;min-width:34px;text-align:right}
+.screen{flex:1;display:flex;flex-direction:column;justify-content:center;will-change:transform,opacity}
+.screen.in-up{animation:inUp .42s cubic-bezier(.2,.8,.2,1) both}
+.screen.in-down{animation:inDown .42s cubic-bezier(.2,.8,.2,1) both}
+.screen.out-up{animation:outUp .22s ease-in both}
+.screen.out-down{animation:outDown .22s ease-in both}
+@keyframes inUp{from{opacity:0;transform:translateY(45vh)}to{opacity:1;transform:none}}
+@keyframes inDown{from{opacity:0;transform:translateY(-45vh)}to{opacity:1;transform:none}}
+@keyframes outUp{to{opacity:0;transform:translateY(-35vh)}}
+@keyframes outDown{to{opacity:0;transform:translateY(35vh)}}
+.swipe-hint{text-align:center;color:rgba(255,255,255,.7);font-size:13px;margin-top:14px;min-height:18px}
+.card{background:var(--card);border-radius:24px;padding:26px 20px;box-shadow:0 20px 50px rgba(20,5,25,.35)}
+h1,h2{font-family:Fraunces,Georgia,serif;font-weight:700;letter-spacing:-.01em}
+.intro{text-align:center;color:#fff}
+.intro .emoji{font-size:56px;margin-bottom:14px}
+.intro h1{font-size:32px;line-height:1.1;margin-bottom:10px;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+.intro p{color:rgba(255,255,255,.9);font-size:16px;line-height:1.45;margin-bottom:20px}
+.btn{display:block;width:100%;border:0;border-radius:16px;padding:17px 18px;font:700 17px "DM Sans",sans-serif;cursor:pointer;transition:transform .12s ease,opacity .2s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:#fff;color:var(--ink)}
+.btn.accent{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff}
+.btn.ghost{background:transparent;color:var(--muted);font-weight:500;font-size:15px;padding:12px}
+.btn.soft{background:var(--chip);color:var(--ink);border:1.5px solid var(--line)}
+.q-kicker{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.q-title{font-size:25px;line-height:1.2;margin-bottom:20px}
+.hint{color:var(--muted);font-size:14px;margin:-12px 0 18px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:16px;padding:14px 14px;font:500 16px/1.3 "DM Sans",sans-serif;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s,transform .12s}
+.opt:active{transform:scale(.985)}
+.opt .e{font-size:26px;width:36px;text-align:center;flex:none}
+.opt small{display:block;color:var(--muted);font-size:13px;font-weight:400;margin-top:3px}
+.opt.sel{border-color:var(--accent);background:#fdf0f6}
+.stars{display:flex;justify-content:center;gap:8px;margin:8px 0 10px}
+.star{border:0;background:none;font-size:44px;line-height:1;cursor:pointer;color:#e6dbe4;transition:transform .12s,color .15s}
+.star.on{color:var(--accent2)}
+.star:active{transform:scale(.9)}
+.scale{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;padding:0 6px}
+textarea{width:100%;min-height:110px;border:1.5px solid var(--line);border-radius:16px;padding:14px;font:16px/1.4 "DM Sans",sans-serif;color:var(--ink);resize:vertical;outline:none;background:#fff}
+textarea:focus{border-color:var(--accent)}
+.row{display:grid;gap:8px;margin-top:16px}
+.result{text-align:center}
+.result .badge{font-size:54px;margin-bottom:6px}
+.result .pre{color:var(--muted);font-size:14px;font-weight:500}
+.result h2{font-size:32px;line-height:1.1;margin:6px 0 14px;background:linear-gradient(135deg,var(--accent),#7b2d6b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.result p.desc{font-size:16px;line-height:1.55;color:#4a3a50;margin-bottom:18px}
+.traits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px}
+.trait{background:var(--chip);border-radius:14px;padding:12px 10px}
+.trait b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:4px}
+.trait span{font-size:15px;font-weight:500}
+.sent{color:var(--muted);font-size:14px;margin-top:10px;min-height:20px}
+.copybox{display:none;margin-top:12px;text-align:left;white-space:pre-wrap;font-size:13px;background:var(--chip);border-radius:12px;padding:12px;color:#4a3a50;max-height:180px;overflow:auto}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+<div class="veil" aria-hidden="true"></div>
+<div class="veil2" aria-hidden="true"></div>
+<div class="sparkles" id="sparkles" aria-hidden="true"></div>
+<main class="wrap">
+  <div class="top" id="top">
+    <button class="back" id="back" aria-label="Indietro">˄</button>
+    <div class="bar"><span id="barfill"></span></div>
+    <div class="count" id="count"></div>
+  </div>
+  <div id="stage" class="screen"></div>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  // Domande. "c" = tratto del profilo (glam, cozy, zen, explorer, dreamer).
+  var Q = [
+    {id:1, kind:"choice", kicker:"Come stai", title:"In questo periodo ti senti più…", label:"Mi sento",
+     opts:[
+      {e:"😮‍💨", t:"Stanca, con voglia di staccare", c:"zen"},
+      {e:"⚡", t:"Carica, con voglia di novità", c:"explorer"},
+      {e:"💼", t:"Con la testa sul lavoro", c:"glam"},
+      {e:"🫶", t:"Con voglia di coccole", c:"cozy"}]},
+    {id:2, kind:"choice", kicker:"La tua settimana", title:"Il tuo momento preferito della settimana?", label:"Momento preferito",
+     opts:[
+      {e:"🎬", t:"Un film al cinema", c:"dreamer"},
+      {e:"🛁", t:"Il tempo solo per me", c:"cozy"},
+      {e:"🚆", t:"Andare a scoprire qualcosa di nuovo", c:"explorer"},
+      {e:"💄", t:"Creare un look", c:"glam"}]},
+    {id:3, kind:"choice", kicker:"Chi sei", title:"Cosa ti fa sentire più te stessa?", label:"Più me stessa quando",
+     opts:[
+      {e:"💄", t:"Truccare e creare", c:"glam"},
+      {e:"✨", t:"Sentirmi bella e curata", c:"glam"},
+      {e:"🫶", t:"Stare con chi amo", c:"cozy"},
+      {e:"🗺️", t:"Scoprire posti nuovi", c:"explorer"}]},
+    {id:4, kind:"choice", kicker:"Il tuo stile", title:"Il tuo stile di accessori?", label:"Accessori",
+     opts:[
+      {e:"🌟", t:"Oro, minimal", c:""},
+      {e:"🤍", t:"Argento, minimal", c:""},
+      {e:"💛", t:"Oro, vistoso", c:"glam"},
+      {e:"🪩", t:"Argento, vistoso", c:"glam"}]},
+    {id:5, kind:"choice", kicker:"Giornata libera", title:"Una giornata libera tutta per te. La passi…", label:"Giornata libera",
+     opts:[
+      {e:"♨️", t:"Tra sauna e piscine calde", c:"zen"},
+      {e:"🏙️", t:"In una città mai vista", c:"explorer"},
+      {e:"💄", t:"A provare trucchi nuovi", c:"glam"},
+      {e:"🍿", t:"Al cinema", c:"dreamer"}]},
+    {id:6, kind:"choice", kicker:"La tua nota", title:"Che profumo ti somiglia di più?", label:"Profumo",
+     opts:[
+      {e:"🌸", t:"Fiori delicati", c:""},
+      {e:"🍊", t:"Agrumi solari", c:""},
+      {e:"🪵", t:"Legni caldi e spezie", c:""},
+      {e:"🌊", t:"Fresco e pulito", c:""}]},
+    {id:7, kind:"stars", kicker:"Il tuo lavoro", title:"Quanto ti rappresentano oggi le foto dei tuoi lavori?", label:"Foto dei lavori",
+     lo:"Per niente", hi:"Tantissimo"},
+    {id:8, kind:"choice", kicker:"Il tuo inverno", title:"Se il tuo inverno avesse un colore, quale sarebbe?", label:"Colore dell'inverno",
+     opts:[
+      {e:"⚪", t:"Bianco neve", s:"come un paesaggio che scorre dal finestrino", c:"explorer"},
+      {e:"🔴", t:"Rosso velluto", s:"come un sipario che si apre", c:"dreamer"},
+      {e:"🕯️", t:"Ambra", s:"come la luce di una candela la sera", c:"cozy"},
+      {e:"🩵", t:"Azzurro vapore", s:"come il respiro caldo nell'aria fredda", c:"zen"}]},
+    {id:9, kind:"text", kicker:"Ultima!", title:"Il prodotto o i prodotti beauty di cui non potresti mai fare a meno?", label:"Must-have beauty",
+     ph:"es. il tuo mascara del cuore, una crema, un pennello…"}
+  ];
+
+  var PROFILES = {
+    glam:{n:"Glam", e:"💄", d:"Hai l'occhio per i dettagli e trasformi ogni volto in una piccola opera d'arte. Il bello per te non è apparenza: è il tuo modo di esprimerti."},
+    cozy:{n:"Cozy", e:"🧸", d:"Sai che le cose più belle sono quelle semplici: una coperta, un profumo buono, le persone giuste vicino. Chi ti sta accanto si sente a casa."},
+    zen:{n:"Zen", e:"♨️", d:"Dai tanto a tutti e ogni tanto hai bisogno di ricaricarti. Quando ti prendi il tuo tempo, torni più luminosa di prima."},
+    explorer:{n:"Esploratrice", e:"🗺️", d:"La curiosità è il tuo motore: posti nuovi, idee nuove, prime volte. La routine ti va stretta, la scoperta ti accende."},
+    dreamer:{n:"Sognatrice", e:"🎬", d:"Ami le storie, le atmosfere e le emozioni che ti restano addosso. Vivi le cose come scene di un film, e le ricordi così."}
+  };
+  var ORDER = ["glam","cozy","zen","explorer","dreamer"];
+
+  var answers = {};   // id -> index | stars | text
+  var step = -1;      // -1 intro, 0..8 domande, 9 risultato
+  var stage = document.getElementById("stage");
+  var top = document.getElementById("top");
+  var back = document.getElementById("back");
+  var fill = document.getElementById("barfill");
+  var count = document.getElementById("count");
+
+  function el(tag, cls, text){
+    var n = document.createElement(tag);
+    if(cls) n.className = cls;
+    if(text != null) n.textContent = text;
+    return n;
+  }
+
+  var busy = false;
+  // Cambio schermata in verticale: avanti = sale verso l'alto, indietro = scende.
+  function go(newStep, dir){
+    if(busy) return;
+    busy = true;
+    stage.className = "screen out-" + dir;
+    setTimeout(function(){
+      step = newStep;
+      render();
+      stage.className = "screen in-" + dir + (step < 0 ? " is-intro" : "");
+      setTimeout(function(){ busy = false; }, 420);
+    }, 220);
+  }
+
+  function answered(){
+    if(step < 0) return true;
+    if(step >= Q.length) return false;
+    var q = Q[step];
+    return q.kind === "text" || answers[q.id] != null;
+  }
+
+  // Swipe verticale: su = avanti (se ha risposto), giù = indietro.
+  var y0 = null;
+  document.addEventListener("touchstart", function(e){
+    y0 = (e.target.tagName === "TEXTAREA") ? null : e.touches[0].clientY;
+  }, {passive:true});
+  document.addEventListener("touchend", function(e){
+    if(y0 == null) return;
+    var dy = e.changedTouches[0].clientY - y0; y0 = null;
+    if(dy < -60 && answered() && step < Q.length){
+      if(step >= 0 && Q[step].kind === "text"){
+        answers[Q[step].id] = (stage.querySelector("textarea") || {value:""}).value.trim();
+      }
+      go(step + 1, "up");
+    } else if(dy > 60 && step >= 0){
+      go(step - 1, "down");
+    }
+  }, {passive:true});
+
+  function render(){
+    stage.textContent = "";
+    document.body.classList.toggle("quiz", step >= 0);
+    if(step < 0) return renderIntro();
+    if(step >= Q.length) return renderResult();
+    top.classList.add("on");
+    back.disabled = false;
+    fill.style.width = (step / Q.length * 100) + "%";
+    count.textContent = (step + 1) + "/" + Q.length;
+    var q = Q[step];
+    var card = el("section","card");
+    card.appendChild(el("div","q-kicker",q.kicker));
+    card.appendChild(el("h2","q-title",q.title));
+    if(q.kind === "choice") renderChoice(card,q);
+    else if(q.kind === "stars") renderStars(card,q);
+    else renderText(card,q);
+    stage.appendChild(card);
+    stage.appendChild(el("div","swipe-hint", step === 0 ? "Tocca una risposta · scorri in giù per tornare indietro" : ""));
+    window.scrollTo(0,0);
+  }
+
+  function renderIntro(){
+    top.classList.remove("on");
+    var d = el("section","intro");
+    d.appendChild(el("h1",null,"Che tipo di Nicole sei? ✨"));
+    d.appendChild(el("p",null,"9 domande, 2 minuti. Rispondi d'istinto, senza pensarci troppo: alla fine scopri il tuo profilo."));
+    var b = el("button","btn primary","Iniziamo 💫");
+    b.onclick = function(){ go(0, "up"); };
+    d.appendChild(b);
+    stage.appendChild(d);
+  }
+
+  function renderChoice(card,q){
+    var box = el("div","opts");
+    q.opts.forEach(function(o,i){
+      var b = el("button","opt" + (answers[q.id] === i ? " sel" : ""));
+      b.type = "button";
+      b.appendChild(el("span","e",o.e));
+      var t = el("span",null,o.t);
+      if(o.s) t.appendChild(el("small",null,o.s));
+      b.appendChild(t);
+      b.onclick = function(){
+        answers[q.id] = i;
+        Array.prototype.forEach.call(box.children,function(c){c.classList.remove("sel")});
+        b.classList.add("sel");
+        setTimeout(next, 260);
+      };
+      box.appendChild(b);
+    });
+    card.appendChild(box);
+  }
+
+  function renderStars(card,q){
+    var wrap = el("div","stars");
+    var cur = answers[q.id] || 0;
+    var btns = [];
+    for(var i=1;i<=5;i++){
+      (function(v){
+        var s = el("button","star" + (v <= cur ? " on" : ""),"★");
+        s.type = "button";
+        s.setAttribute("aria-label", v + " stelle");
+        s.onclick = function(){
+          answers[q.id] = v;
+          btns.forEach(function(x,k){ x.classList.toggle("on", k < v); });
+          setTimeout(next, 380);
+        };
+        btns.push(s); wrap.appendChild(s);
+      })(i);
+    }
+    card.appendChild(wrap);
+    var sc = el("div","scale");
+    sc.appendChild(el("span",null,q.lo)); sc.appendChild(el("span",null,q.hi));
+    card.appendChild(sc);
+  }
+
+  function renderText(card,q){
+    var ta = el("textarea");
+    ta.placeholder = q.ph;
+    ta.maxLength = 220;
+    ta.value = answers[q.id] || "";
+    card.appendChild(ta);
+    var row = el("div","row");
+    var go = el("button","btn primary","Scopri il tuo profilo ✨");
+    go.style.background = "linear-gradient(135deg,var(--accent),#7b2d6b)"; go.style.color = "#fff";
+    go.onclick = function(){ answers[q.id] = ta.value.trim(); next(); };
+    var skip = el("button","btn ghost","Salta");
+    skip.onclick = function(){ answers[q.id] = ""; next(); };
+    row.appendChild(go); row.appendChild(skip);
+    card.appendChild(row);
+  }
+
+  function next(){ go(step + 1, "up"); }
+  back.onclick = function(){ if(step >= 0) go(step - 1, "down"); };
+
+  function profile(){
+    var score = {glam:0,cozy:0,zen:0,explorer:0,dreamer:0};
+    Q.forEach(function(q){
+      if(q.kind === "choice" && answers[q.id] != null){
+        var c = q.opts[answers[q.id]].c;
+        if(c) score[c] += 1;
+      }
+    });
+    var ranked = ORDER.slice().sort(function(a,b){ return score[b] - score[a] || ORDER.indexOf(a) - ORDER.indexOf(b); });
+    var a = ranked[0], b = ranked[1];
+    return score[b] > 0 ? [a,b] : [a];
+  }
+
+  function answerText(q){
+    var v = answers[q.id];
+    if(q.kind === "choice") return v == null ? "—" : q.opts[v].t;
+    if(q.kind === "stars") return v ? v + "/5" : "—";
+    return v ? v : "—";
+  }
+
+  function message(name){
+    var lines = ["✨ Che tipo di Nicole sei? → " + name, ""];
+    Q.forEach(function(q){ lines.push(q.id + ". " + q.label + ": " + answerText(q)); });
+    return lines.join("\n");
+  }
+
+  function renderResult(){
+    fill.style.width = "100%";
+    count.textContent = "✓";
+    back.disabled = false;
+    var p = profile();
+    var name = "Nicole " + p.map(function(k){ return PROFILES[k].n; }).join(" & ");
+    var card = el("section","card result");
+    card.appendChild(el("div","badge",p.map(function(k){ return PROFILES[k].e; }).join("")));
+    card.appendChild(el("div","pre","Il tuo profilo è"));
+    card.appendChild(el("h2",null,name));
+    card.appendChild(el("p","desc",PROFILES[p[0]].d));
+    var traits = el("div","traits");
+    [["La tua nota",6],["Il tuo colore",8]].forEach(function(t){
+      var q = Q.filter(function(x){return x.id === t[1];})[0];
+      var box = el("div","trait");
+      box.appendChild(el("b",null,t[0]));
+      var v = answers[q.id];
+      box.appendChild(el("span",null, v == null ? "—" : q.opts[v].e + " " + q.opts[v].t));
+      traits.appendChild(box);
+    });
+    card.appendChild(traits);
+
+    var msg = message(name);
+    var send = el("button","btn accent","Manda il risultato a Nicholas 💬");
+    var note = el("div","sent");
+    var copybox = el("div","copybox",msg);
+    send.onclick = function(){
+      window.location.href = "https://wa.me/?text=" + encodeURIComponent(msg);
+      note.textContent = "Si apre WhatsApp: scegli Nicholas e invia 💌";
+    };
+    var copy = el("button","btn soft","Copia il risultato");
+    copy.onclick = function(){
+      var done = function(){ note.textContent = "Copiato! Incollalo nella chat con Nicholas 💌"; };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(msg).then(done, function(){ copybox.style.display = "block"; note.textContent = "Tieni premuto sul testo per copiarlo"; });
+      } else { copybox.style.display = "block"; note.textContent = "Tieni premuto sul testo per copiarlo"; }
+    };
+    var again = el("button","btn ghost","Rifai il quiz");
+    again.onclick = function(){ answers = {}; go(-1, "down"); };
+    var row = el("div","row");
+    row.appendChild(send); row.appendChild(copy); row.appendChild(again);
+    card.appendChild(row);
+    card.appendChild(note);
+    card.appendChild(copybox);
+    stage.appendChild(card);
+    window.scrollTo(0,0);
+  }
+
+  // stelline di sfondo
+  var sp = document.getElementById("sparkles");
+  for(var i=0;i<28;i++){
+    var s = document.createElement("i");
+    s.style.left = Math.random()*100 + "%";
+    s.style.top = Math.random()*100 + "%";
+    s.style.animationDelay = (Math.random()*4) + "s";
+    s.style.animationDuration = (3 + Math.random()*3) + "s";
+    sp.appendChild(s);
+  }
+
+  render();
+  stage.className = "screen in-up is-intro";
+})();
+</script>
+</body>
+</html>
