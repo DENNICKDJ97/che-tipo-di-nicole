@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>Che tipo di Nicole sei?</title>
-<meta name="description" content="10 domande, 3 minuti. Rispondi d'istinto e scopri il tuo profilo.">
+<meta name="description" content="Una decina di domande, 3 minuti. Rispondi d'istinto e scopri il tuo profilo.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dennickdj97.github.io/che-tipo-di-nicole/">
 <meta property="og:title" content="Che tipo di Nicole sei? ✨">
-<meta property="og:description" content="10 domande, 3 minuti. Rispondi d'istinto e scopri il tuo profilo.">
+<meta property="og:description" content="Una decina di domande, 3 minuti. Rispondi d'istinto e scopri il tuo profilo.">
 <meta property="og:image" content="https://dennickdj97.github.io/che-tipo-di-nicole/anteprima.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -148,7 +148,16 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
   "use strict";
 
   // Domande. "c" = tratto del profilo (glam, cozy, zen, explorer, dreamer).
+  // "show" = domanda che compare solo con certe risposte (A = risposte date finora).
+  function has(A,id,i){ var v = A[id]; return Array.isArray(v) ? v.indexOf(i) >= 0 : v === i; }
+  function first(A,id,i){ var v = A[id]; return Array.isArray(v) ? v[0] === i : v === i; }
   var Q = [
+    {id:12, kind:"choice", kicker:"Per scaldarci", title:"Il tuo superpotere da make-up artist?", label:"Superpotere",
+     opts:[
+      {e:"✍️", t:"Eyeliner perfetto al primo colpo", c:""},
+      {e:"✨", t:"Una base che sembra pelle vera", c:""},
+      {e:"💋", t:"Labbra da copertina", c:""},
+      {e:"🪄", t:"Sopracciglia scolpite", c:""}]},
     {id:1, kind:"choice", kicker:"Come stai", title:"In questo periodo ti senti più…", label:"Mi sento",
      opts:[
       {e:"😮‍💨", t:"Stanca, con voglia di staccare", c:"zen"},
@@ -182,6 +191,21 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
       {e:"✈️", t:"Un'esperienza da \"un giorno lo farò\"", c:"explorer"},
       {e:"💄", t:"Un prodotto top che mi sembra esagerato", c:"glam"},
       {e:"✍️", t:"Altro", other:true, ph:"Scrivilo qui…", c:""}]},
+    {id:51, kind:"choice", kicker:"Dimmi di più", title:"Il trattamento dei sogni?", label:"Trattamento dei sogni",
+     show:function(A){ return A[5] === 0; },
+     opts:[
+      {e:"🧖‍♀️", t:"Un trattamento viso da vera diva", c:"zen"},
+      {e:"💅", t:"Mani e piedi perfetti", c:"glam"},
+      {e:"💇‍♀️", t:"Una giornata dal parrucchiere top", c:"glam"},
+      {e:"💆‍♀️", t:"Un massaggio solo per me", c:"zen"}]},
+    {id:52, kind:"choice", kicker:"Dimmi di più", title:"L'accessorio che ti fa battere il cuore?", label:"Accessorio del cuore",
+     show:function(A){ return A[5] === 1; },
+     opts:[
+      {e:"👜", t:"Una borsa", c:"glam"},
+      {e:"🧣", t:"Una sciarpa o un foulard", c:"cozy"},
+      {e:"🕶️", t:"Occhiali da sole", c:"explorer"},
+      {e:"🧢", t:"Un cappello o un berretto", c:"cozy"},
+      {e:"✍️", t:"Altro", other:true, ph:"Scrivilo qui…", c:""}]},
     {id:6, kind:"choice", kicker:"La tua nota", title:"Che profumo ti somiglia di più?", label:"Profumo",
      opts:[
       {e:"🌸", t:"Fiori delicati", c:""},
@@ -195,6 +219,13 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
       {e:"🥶", t:"Il freddo a mani e piedi", c:"cozy"},
       {e:"🔋", t:"Il telefono che si scarica", c:""},
       {e:"✍️", t:"Altro", other:true, ph:"Scrivilo qui…", c:""}]},
+    {id:71, kind:"choice", kicker:"Tra noi MUA", title:"I pennelli che ti finiscono prima?", label:"Pennelli più usati",
+     show:function(A){ return A[7] === 0; },
+     opts:[
+      {e:"🫧", t:"Fondotinta e correttore", c:"glam"},
+      {e:"👁️", t:"Occhi e sfumature", c:"glam"},
+      {e:"🌸", t:"Cipria, blush e bronzer", c:"glam"},
+      {e:"💋", t:"Labbra e dettagli", c:"glam"}]},
     {id:8, kind:"choice", kicker:"Il tuo inverno", title:"Domenica di gennaio, fuori fa freddo. Il piano perfetto?", label:"Domenica di gennaio",
      opts:[
       {e:"♨️", t:"Al caldo tra vapore e piscine", c:"zen"},
@@ -202,15 +233,39 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
       {e:"🚆", t:"In treno verso una città nuova", c:"explorer"},
       {e:"🍿", t:"Al buio in sala, con i popcorn", c:"dreamer"},
       {e:"🕯️", t:"A casa tra candele, bagno caldo e creme", c:"cozy"}]},
+    {id:81, kind:"choice", kicker:"Dimmi di più", title:"Sulla neve tu sei più…", label:"Sulla neve",
+     show:function(A){ return has(A,4,4) || A[8] === 1; },
+     opts:[
+      {e:"🎿", t:"Sci ai piedi", c:"explorer"},
+      {e:"🏂", t:"Snowboard", c:"explorer"},
+      {e:"❄️", t:"Ciaspole e passeggiate", c:"explorer"},
+      {e:"☕", t:"Baita, sole e cioccolata calda", c:"cozy"}]},
+    {id:82, kind:"choice", kicker:"Dimmi di più", title:"Il tuo relax perfetto?", label:"Relax perfetto",
+     show:function(A){ return A[3] === 0 || first(A,4,0) || A[8] === 0; },
+     opts:[
+      {e:"🌊", t:"Piscine calde all'aperto, anche col freddo", c:"zen"},
+      {e:"🔥", t:"Sauna e bagno turco", c:"zen"},
+      {e:"🏔️", t:"Con vista sulle montagne", c:"explorer"},
+      {e:"🌃", t:"Di sera, con le luci della città", c:"dreamer"}]},
     {id:9, kind:"choice", kicker:"Nuovo capitolo", title:"Il trasloco a Milano, in una parola?", label:"Trasloco a Milano",
      opts:[
       {e:"🎉", t:"Non vedo l'ora: vita nuova!", c:"explorer"},
       {e:"😅", t:"Un po' d'ansia, tante cose da sistemare", c:"zen"},
       {e:"🥲", t:"Un po' di nostalgia", c:"dreamer"},
       {e:"🙈", t:"Ci penso più avanti", c:"cozy"}]},
+    {id:91, kind:"choice", kicker:"Dimmi di più", title:"La prima cosa che vuoi fare a Milano?", label:"Prima cosa a Milano",
+     show:function(A){ return A[9] === 0; },
+     opts:[
+      {e:"🍝", t:"Scoprire locali e ristoranti", c:"explorer"},
+      {e:"🏡", t:"Rendere bella la casa nuova", c:"cozy"},
+      {e:"🖼️", t:"Mostre e musei", c:"dreamer"},
+      {e:"🛍️", t:"Mercatini e negozietti", c:"glam"}]},
     {id:10, kind:"text", kicker:"Ultima!", title:"Il prodotto o i prodotti beauty di cui non potresti mai fare a meno?", label:"Must-have beauty",
      ph:"es. il tuo mascara del cuore, una crema, un pennello…"}
   ];
+
+  // Le domande visibili adesso, in base alle risposte date.
+  function V(){ return Q.filter(function(q){ return !q.show || q.show(answers); }); }
 
   var PROFILES = {
     glam:{n:"Glam", e:"💄", d:"Esci in dieci minuti, ma con l'eyeliner perfetto. Il trucco per te non è una maschera: è il tuo modo di dire le cose."},
@@ -238,16 +293,17 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
 
   var busy = false;
   // Indizi brevi che compaiono andando avanti, prima di alcune domande.
-  var TEASE = {5:"Mmh… iniziamo a capire chi sei 👀"};
+  var TEASE = {6:"Mmh… iniziamo a capire chi sei 👀"};
   // Cambio schermata in verticale: avanti = sale verso l'alto, indietro = scende.
   function go(newStep, dir){
     if(busy) return;
     busy = true;
     stage.className = "screen out-" + dir;
     setTimeout(function(){
-      if(dir === "up" && TEASE[newStep]){
+      var nq = V()[newStep];
+      if(dir === "up" && nq && TEASE[nq.id]){
         stage.textContent = "";
-        stage.appendChild(el("div","teaser",TEASE[newStep]));
+        stage.appendChild(el("div","teaser",TEASE[nq.id]));
         stage.className = "screen in-up";
         setTimeout(function(){
           stage.className = "screen out-up";
@@ -266,8 +322,9 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
 
   function answered(){
     if(step < 0) return true;
-    if(step >= Q.length) return false;
-    var q = Q[step];
+    var L = V();
+    if(step >= L.length) return false;
+    var q = L[step];
     if(q.kind === "two") return Array.isArray(answers[q.id]) && answers[q.id].length === 2;
     return q.kind === "text" || answers[q.id] != null;
   }
@@ -281,11 +338,12 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
   document.addEventListener("touchend", function(e){
     if(y0 == null) return;
     var dy = e.changedTouches[0].clientY - y0; y0 = null;
-    if(dy < -60 && answered() && step < Q.length){
+    var L = V();
+    if(dy < -60 && answered() && step < L.length){
       var oi = stage.querySelector(".other-row input");
-      if(oi && step >= 0) answers[Q[step].id + "_t"] = oi.value.trim();
-      if(step >= 0 && Q[step].kind === "text"){
-        answers[Q[step].id] = (stage.querySelector("textarea") || {value:""}).value.trim();
+      if(oi && step >= 0) answers[L[step].id + "_t"] = oi.value.trim();
+      if(step >= 0 && L[step].kind === "text"){
+        answers[L[step].id] = (stage.querySelector("textarea") || {value:""}).value.trim();
       }
       go(step + 1, "up");
     } else if(dy > 60 && step >= 0){
@@ -297,12 +355,13 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     stage.textContent = "";
     document.body.classList.toggle("quiz", step >= 0);
     if(step < 0) return renderIntro();
-    if(step >= Q.length) return renderResult();
+    var L = V();
+    if(step >= L.length) return renderResult();
     top.classList.add("on");
     back.disabled = false;
-    fill.style.width = (step / Q.length * 100) + "%";
-    count.textContent = (step + 1) + "/" + Q.length;
-    var q = Q[step];
+    fill.style.width = (step / L.length * 100) + "%";
+    count.textContent = "";
+    var q = L[step];
     var card = el("section","card");
     card.appendChild(el("div","q-kicker",q.kicker));
     card.appendChild(el("h2","q-title",q.title));
@@ -320,7 +379,7 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     top.classList.remove("on");
     var d = el("section","intro");
     d.appendChild(el("h1",null,"Che tipo di Nicole sei? ✨"));
-    d.appendChild(el("p",null,"10 domande, 3 minuti. Rispondi d'istinto, senza pensarci troppo: alla fine scopri il tuo profilo."));
+    d.appendChild(el("p",null,"Una decina di domande, 3 minuti. Rispondi d'istinto, senza pensarci troppo: alla fine scopri il tuo profilo."));
     var b = el("button","btn primary","Iniziamo 💫");
     b.onclick = function(){ go(0, "up"); };
     d.appendChild(b);
@@ -440,7 +499,7 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
 
   function scores(){
     var score = {glam:0,cozy:0,zen:0,explorer:0,dreamer:0};
-    Q.forEach(function(q){
+    V().forEach(function(q){
       if(q.kind === "choice" && answers[q.id] != null){
         var c = q.opts[answers[q.id]].c;
         if(c) score[c] += 1;
@@ -488,7 +547,7 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
 
   function message(name){
     var lines = ["✨ Che tipo di Nicole sei? → " + name, "Mix: " + mixText(), ""];
-    Q.forEach(function(q){ lines.push(q.id + ". " + q.label + ": " + answerText(q)); });
+    V().forEach(function(q,i){ lines.push((i + 1) + ". " + q.label + ": " + answerText(q)); });
     return lines.join("\n");
   }
 

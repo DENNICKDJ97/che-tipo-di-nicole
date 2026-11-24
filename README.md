@@ -1,3 +1,3 @@
 # Che tipo di Nicole sei? ✨
 
-Un piccolo quiz: 10 domande, 3 minuti.
+Un piccolo quiz: Una decina di domande, 3 minuti.
