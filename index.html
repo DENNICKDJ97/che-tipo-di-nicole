@@ -495,8 +495,9 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     var note = el("div","sent");
     var copybox = el("div","copybox",msg);
     send.onclick = function(){
-      window.location.href = "https://wa.me/?text=" + encodeURIComponent(msg);
-      note.textContent = "Si apre WhatsApp: scegli Nicholas e invia 💌";
+      var to = ["39","366","718","0983"].join("");
+      window.location.href = "https://wa.me/" + to + "?text=" + encodeURIComponent(msg);
+      note.textContent = "Si apre WhatsApp: premi invia 💌";
     };
     var copy = el("button","btn soft","Copia il risultato");
     copy.onclick = function(){
