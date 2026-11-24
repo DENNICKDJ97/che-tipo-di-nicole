@@ -150,19 +150,21 @@ textarea:focus{border-color:var(--accent)}
       {e:"♨️", t:"Tra sauna e piscine calde", c:"zen"},
       {e:"🏙️", t:"In una città mai vista", c:"explorer"},
       {e:"💄", t:"A provare trucchi nuovi", c:"glam"},
-      {e:"🍿", t:"Al cinema", c:"dreamer"}]},
+      {e:"🍿", t:"Al cinema", c:"dreamer"},
+      {e:"⛷️", t:"Sulla neve, tra piste e baita", c:"explorer"}]},
     {id:5, kind:"choice", kicker:"La tua nota", title:"Che profumo ti somiglia di più?", label:"Profumo",
      opts:[
       {e:"🌸", t:"Fiori delicati", c:""},
       {e:"🍊", t:"Agrumi solari", c:""},
       {e:"🪵", t:"Legni caldi e spezie", c:""},
       {e:"🌊", t:"Fresco e pulito", c:""}]},
-    {id:6, kind:"choice", kicker:"Il tuo inverno", title:"Se il tuo inverno avesse un colore, quale sarebbe?", label:"Colore dell'inverno",
+    {id:6, kind:"choice", kicker:"Il tuo inverno", title:"Domenica di gennaio, fuori fa freddo. Il piano perfetto?", label:"Domenica di gennaio",
      opts:[
-      {e:"⚪", t:"Bianco neve", s:"come un paesaggio che scorre dal finestrino", c:"explorer"},
-      {e:"🔴", t:"Rosso velluto", s:"come un sipario che si apre", c:"dreamer"},
-      {e:"🕯️", t:"Ambra", s:"come la luce di una candela la sera", c:"cozy"},
-      {e:"🩵", t:"Azzurro vapore", s:"come il respiro caldo nell'aria fredda", c:"zen"}]},
+      {e:"♨️", t:"Al caldo tra vapore e piscine", c:"zen"},
+      {e:"⛷️", t:"Sulle piste, tra neve e sole", c:"explorer"},
+      {e:"🚆", t:"In treno verso una città nuova", c:"explorer"},
+      {e:"🍿", t:"Al buio in sala, con i popcorn", c:"dreamer"},
+      {e:"🕯️", t:"A casa tra candele, bagno caldo e creme", c:"cozy"}]},
     {id:7, kind:"text", kicker:"Ultima!", title:"Il prodotto o i prodotti beauty di cui non potresti mai fare a meno?", label:"Must-have beauty",
      ph:"es. il tuo mascara del cuore, una crema, un pennello…"}
   ];
@@ -401,7 +403,7 @@ textarea:focus{border-color:var(--accent)}
     card.appendChild(el("h2",null,name));
     card.appendChild(el("p","desc",PROFILES[p[0]].d));
     var traits = el("div","traits");
-    [["La tua nota",5],["Il tuo colore",6]].forEach(function(t){
+    [["La tua nota",5],["La tua domenica",6]].forEach(function(t){
       var q = Q.filter(function(x){return x.id === t[1];})[0];
       var box = el("div","trait");
       box.appendChild(el("b",null,t[0]));
