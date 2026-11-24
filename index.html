@@ -72,6 +72,7 @@ h1,h2{font-family:Fraunces,Georgia,serif;font-weight:700;letter-spacing:-.01em}
 .intro p{color:rgba(255,255,255,.9);font-size:16px;line-height:1.45;margin-bottom:20px}
 .btn{display:block;width:100%;border:0;border-radius:16px;padding:17px 18px;font:700 17px "DM Sans",sans-serif;cursor:pointer;transition:transform .12s ease,opacity .2s}
 .btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.45;cursor:default}
 .btn.primary{background:#fff;color:var(--ink)}
 .btn.accent{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff}
 .btn.ghost{background:transparent;color:var(--muted);font-weight:500;font-size:15px;padding:12px}
@@ -340,7 +341,8 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     if(step >= L.length) return false;
     var q = L[step];
     if(q.kind === "two") return Array.isArray(answers[q.id]) && answers[q.id].length === 2;
-    return q.kind === "text" || q.kind === "text2" || answers[q.id] != null;
+    if(q.kind === "text2"){ var f = stage.querySelector("input.field"); return !!(f && f.value.trim()); }
+    return q.kind === "text" || answers[q.id] != null;
   }
 
   // Swipe verticale: su = avanti (se ha risposto), giù = indietro.
@@ -520,14 +522,20 @@ canvas.scratch{position:absolute;inset:0;width:100%;height:100%;border-radius:18
     var a = el("input"); a.type = "text"; a.maxLength = 80; a.placeholder = q.f1; a.value = v.a || ""; a.className = "field";
     var b = el("input"); b.type = "text"; b.maxLength = 120; b.placeholder = q.f2; b.value = v.b || ""; b.className = "field";
     card.appendChild(a); card.appendChild(b);
-    card.appendChild(el("p","hint2","Facoltativo: se non ti viene in mente, salta pure"));
+    var hint = el("p","hint2","Il brand è d'obbligo, il prodotto se ti va 😉");
+    card.appendChild(hint);
     var row = el("div","row");
     var ok = el("button","btn primary","Scopri il tuo profilo ✨");
     ok.style.background = "linear-gradient(135deg,var(--accent),#7b2d6b)"; ok.style.color = "#fff";
-    ok.onclick = function(){ answers[q.id] = {a:a.value.trim(), b:b.value.trim()}; next(); };
-    var skip = el("button","btn ghost","Salta");
-    skip.onclick = function(){ answers[q.id] = {a:"", b:""}; next(); };
-    row.appendChild(ok); row.appendChild(skip);
+    function check(){ ok.disabled = !a.value.trim(); }
+    a.addEventListener("input", check); check();
+    ok.onclick = function(){
+      if(!a.value.trim()){ a.focus(); return; }
+      answers[q.id] = {a:a.value.trim(), b:b.value.trim()}; next();
+    };
+    a.addEventListener("keydown", function(e){ if(e.key === "Enter") b.focus(); });
+    b.addEventListener("keydown", function(e){ if(e.key === "Enter") ok.onclick(); });
+    row.appendChild(ok);
     card.appendChild(row);
   }
 
