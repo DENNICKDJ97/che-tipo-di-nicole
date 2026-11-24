@@ -438,7 +438,7 @@ textarea:focus{border-color:var(--accent)}
     setTimeout(confetti, 350);
   }
 
-  // Coriandoli al risultato: canvas leggero, una sola raffica.
+  // Coriandoli al risultato: una raffica dal centro, poi una pioggia lenta dall'alto (~7 s).
   function confetti(){
     if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     var cv = document.createElement("canvas");
@@ -447,28 +447,39 @@ textarea:focus{border-color:var(--accent)}
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var W = cv.width = innerWidth * dpr, H = cv.height = innerHeight * dpr;
     var ctx = cv.getContext("2d");
-    var colors = ["#c2457a","#e9a23b","#ffffff","#f6c1d4","#7b2d6b","#ffd27a"];
+    var colors = ["#c2457a","#e9a23b","#ffffff","#f6c1d4","#7b2d6b","#ffd27a","#7fd1f0"];
+    var DUR = 7000, FADE = 1500;
     var parts = [];
-    for(var i=0;i<140;i++){
-      parts.push({
-        x: W/2 + (Math.random()-.5)*W*0.3, y: H*0.35,
-        vx: (Math.random()-.5)*14*dpr, vy: (-Math.random()*13-6)*dpr,
-        w: (6+Math.random()*6)*dpr, h: (3+Math.random()*4)*dpr,
-        r: Math.random()*6.28, vr: (Math.random()-.5)*.35,
-        c: colors[i % colors.length]
-      });
+    function piece(burst, delay){
+      return {
+        x: burst ? W/2 + (Math.random()-.5)*W*0.3 : Math.random()*W,
+        y: burst ? H*0.35 : -20*dpr - Math.random()*H*0.6,
+        vx: burst ? (Math.random()-.5)*16*dpr : (Math.random()-.5)*1.2*dpr,
+        vy: burst ? (-Math.random()*14-6)*dpr : (1.2+Math.random()*1.6)*dpr,
+        w: (6+Math.random()*7)*dpr, h: (3+Math.random()*4)*dpr,
+        r: Math.random()*6.28, vr: (Math.random()-.5)*.3,
+        sw: Math.random()*6.28, burst: burst, delay: delay,
+        c: colors[Math.floor(Math.random()*colors.length)]
+      };
     }
+    for(var i=0;i<150;i++) parts.push(piece(true, 0));
+    for(var j=0;j<170;j++) parts.push(piece(false, 300 + Math.random()*3500));
     var t0 = performance.now();
     (function frame(now){
       var t = now - t0;
       ctx.clearRect(0,0,W,H);
+      var alpha = t > DUR - FADE ? Math.max(0, (DUR - t) / FADE) : 1;
       parts.forEach(function(p){
-        p.vy += .38*dpr; p.vx *= .992; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        if(t < p.delay) return;
+        if(p.burst){ p.vy += .34*dpr; p.vx *= .99; }
+        else { p.sw += .05; p.vx = Math.sin(p.sw)*1.1*dpr; if(p.vy < 3*dpr) p.vy += .01*dpr; }
+        p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        if(p.y > H + 30*dpr) return;
         ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
-        ctx.globalAlpha = Math.max(0, 1 - t/3200);
+        ctx.globalAlpha = alpha;
         ctx.fillStyle = p.c; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore();
       });
-      if(t < 3200) requestAnimationFrame(frame); else cv.remove();
+      if(t < DUR) requestAnimationFrame(frame); else cv.remove();
     })(t0);
   }
 
